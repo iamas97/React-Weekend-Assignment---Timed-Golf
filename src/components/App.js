@@ -3,6 +3,7 @@ import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
+    this.offset = new Date(-1*(5*60*1000*60+30*60*1000)).valueOf();
     this.state = {
       time: 0,
       x: 0,
@@ -31,18 +32,8 @@ class Timer extends React.Component {
   }
   timerUpdate() {
     
-    let distance = (new Date().getTime()) - this.state.time;
-    // let days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    let hours = (
-      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + ""
-    ).padStart(2, 0);
-    let minutes = (
-      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + ""
-    ).padStart(2, 0);
-    let seconds = (Math.floor((distance % (1000 * 60)) / 1000) + "").padStart(
-      2,
-      0
-    );
+    let nt = new Date((new Date().getTime()) - this.state.time + this.offset);
+    let [hours,minutes,seconds] = [nt.getHours(),nt.getMinutes(),nt.getSeconds()].map((x)=>(x+"").padStart(2,0))
     let timerStr = `${hours}:${minutes}:${seconds}`;
     this.setState({
       timerStr: timerStr,
@@ -76,6 +67,7 @@ class Timer extends React.Component {
     return (
       <>
         <div className="ball" style={this.state.ballStyle}></div>
+        <h3>Hello</h3>
         <button className="start ballProvider" onClick={this.startButton}>
           Start
         </button>
