@@ -4,10 +4,11 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      started:false,
       time: 0,
       x: 0,
       y: 0,
-      timerStr: "0:00:00:00",
+      timerStr: "",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
@@ -22,7 +23,7 @@ class Timer extends React.Component {
   }
   startButton() {
     let time = new Date().valueOf();
-    let timerId = setInterval(this.timerUpdate, 1 * 1000);
+    let timerId = setInterval(this.timerUpdate, 1 * 999);
     window.addEventListener("keydown", this.keyPressed);
     this.setState({
       started: true,
@@ -31,8 +32,8 @@ class Timer extends React.Component {
     });
   }
   timerUpdate() {
-    let now = new Date().getTime();
-    let distance = now - this.state.time;
+    
+    let distance = (new Date().getTime()) - this.state.time;
     let days = Math.floor(distance / (1000 * 60 * 60 * 24));
     let hours = (
       Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + ""
@@ -77,13 +78,11 @@ class Timer extends React.Component {
     return (
       <>
         <div className="ball" style={this.state.ballStyle}></div>
-        <div>
-          <button className="start ballProvider" onClick={this.startButton}>
-            Start
-          </button>
-          <div className="heading-timer">{this.state.timerStr}</div>
-          <div className="hole"></div>
-        </div>
+        <button className="start ballProvider" onClick={this.startButton}>
+          Start
+        </button>
+        <div className="heading-timer">{this.state.timerStr}</div>
+        <div className="hole"></div>
       </>
     );
   }
