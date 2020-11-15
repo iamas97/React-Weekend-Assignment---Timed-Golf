@@ -3,22 +3,88 @@ import "../styles/App.css";
 class Timer extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { time: 0, x: 0, y: 0 };
+    this.state = {
+      time: 0,
+      x: 0,
+      y: 0,
+      timerStr: "00:00:00:00",
+      ballStyle: { top: "0px", left: "0px" },
+    };
+    this.timerUpdate = this.timerUpdate.bind(this);
+    this.startButton = this.startButton.bind(this);
+    this.keyPressed = this.keyPressed.bind(this);
   }
-  componentDidMount() {
-    
-  }
+  componentDidMount() {}
 
   componentWillUnmount() {
-    
+    clearInterval(this.state.timerId);
+    window.removeEventListener("keydown", this.keyPressed);
+  }
+  startButton() {
+    let time = new Date().valueOf();
+    let timerId = setInterval(this.timerUpdate, 1 * 1000);
+    window.addEventListener("keydown", this.keyPressed);
+    this.setState({
+      started: true,
+      time: time,
+      timerId: timerId,
+    });
+  }
+  timerUpdate() {
+    let now = new Date().getTime();
+    let distance = now - this.state.time;
+    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    let hours = (
+      Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + ""
+    ).padStart(2, 0);
+    let minutes = (
+      Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)) + ""
+    ).padStart(2, 0);
+    let seconds = (Math.floor((distance % (1000 * 60)) / 1000) + "").padStart(
+      2,
+      0
+    );
+    let timerStr = `${days}:${hours}:${minutes}:${seconds}`;
+    this.setState({
+      timerStr: timerStr,
+    });
   }
 
+  keyPressed({key}) {
+    let tempX = this.state.x,
+      tempY = this.state.y,
+      ALLOWED_KEYS = {
+        ArrowUp: () => (tempY = tempY - 5),
+        ArrowDown: () => (tempY = tempY + 5),
+        ArrowLeft: () => (tempX = tempX - 5),
+        ArrowRight: () => (tempX = tempX + 5),
+      };
 
-
+    key in ALLOWED_KEYS && ALLOWED_KEYS[key]();
+    let ballStyle = { top: tempY + "px", left: tempX + "px" };
+    this.setState({
+      x: tempX,
+      y: tempY,
+      ballStyle: ballStyle,
+    });
+    tempX == 250 &&
+      tempY == 250 &&
+      (clearInterval(this.state.timerId) ||
+        window.removeEventListener("keydown", this.keyPressed));
+  }
+  
   render() {
     return (
- <>
-</>
+      <>
+        <div className="ball" style={this.state.ballStyle}></div>
+        <div>
+          <button className="start ballProvider" onClick={this.startButton}>
+            Start
+          </button>
+          <div className="heading-timer">{this.state.timerStr}</div>
+          <div className="hole"></div>
+        </div>
+      </>
     );
   }
 }
