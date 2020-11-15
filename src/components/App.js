@@ -67,7 +67,6 @@ class Timer extends React.Component {
     return (
       <>
         <div className="ball" style={this.state.ballStyle}></div>
-        <h3>Hello</h3>
         <button className="start ballProvider" onClick={this.startButton}>
           Start
         </button>
