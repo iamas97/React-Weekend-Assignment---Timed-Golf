@@ -4,11 +4,10 @@ class Timer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      started:false,
       time: 0,
       x: 0,
       y: 0,
-      timerStr: "",
+      timerStr: "00:00:00",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
@@ -26,7 +25,6 @@ class Timer extends React.Component {
     let timerId = setInterval(this.timerUpdate, 1 * 999);
     window.addEventListener("keydown", this.keyPressed);
     this.setState({
-      started: true,
       time: time,
       timerId: timerId,
     });
@@ -34,7 +32,7 @@ class Timer extends React.Component {
   timerUpdate() {
     
     let distance = (new Date().getTime()) - this.state.time;
-    let days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    // let days = Math.floor(distance / (1000 * 60 * 60 * 24));
     let hours = (
       Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)) + ""
     ).padStart(2, 0);
@@ -45,7 +43,7 @@ class Timer extends React.Component {
       2,
       0
     );
-    let timerStr = `${days}:${hours}:${minutes}:${seconds}`;
+    let timerStr = `${hours}:${minutes}:${seconds}`;
     this.setState({
       timerStr: timerStr,
     });
