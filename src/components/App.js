@@ -8,7 +8,7 @@ class Timer extends React.Component {
       time: 0,
       x: 0,
       y: 0,
-      timerStr: null,
+      timerStr: "00:00:00",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
@@ -70,9 +70,8 @@ class Timer extends React.Component {
         <button className="start ballProvider" onClick={this.startButton}>
           Start
         </button>
-        {this.state.timerStr ? (
-          <div className="heading-timer">{this.state.timerStr}</div>
-        ) : null}
+        <div className="heading-timer">{this.state.timerStr}</div>
+       
         <div className="hole"></div>
       </>
     );
