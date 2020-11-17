@@ -8,7 +8,7 @@ class Timer extends React.Component {
       time: 0,
       x: 0,
       y: 0,
-      timerStr: "00",
+      timerStr: "0",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
