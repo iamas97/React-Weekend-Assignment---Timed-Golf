@@ -36,7 +36,7 @@ class Timer extends React.Component {
     // let [hours,minutes,seconds] = [nt.getHours(),nt.getMinutes(),nt.getSeconds()].map((x)=>(x+"").padStart(2,0))
     // let timerStr = `${hours}:${minutes}:${seconds}`;
     let nt = (new Date()).valueOf() - this.state.time;
-    let timerStr = (Math.floor(nt/1000)+"");
+    let timerStr = (Math.round(nt/1000)+"");
     this.setState({
       timerStr: timerStr,
     });
