@@ -8,7 +8,7 @@ class Timer extends React.Component {
       time: 0,
       x: 0,
       y: 0,
-      timerStr: "00:00:00",
+      timerStr: "0s",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
@@ -23,7 +23,7 @@ class Timer extends React.Component {
   }
   startButton() {
     let time = new Date().valueOf();
-    let timerId = setInterval(this.timerUpdate, 1 * 999);
+    let timerId = setInterval(this.timerUpdate, 1 * 990);
     window.addEventListener("keydown", this.keyPressed);
     this.setState({
       time: time,
@@ -32,9 +32,11 @@ class Timer extends React.Component {
   }
   timerUpdate() {
     
-    let nt = new Date((new Date().getTime()) - this.state.time + this.offset);
-    let [hours,minutes,seconds] = [nt.getHours(),nt.getMinutes(),nt.getSeconds()].map((x)=>(x+"").padStart(2,0))
-    let timerStr = `${hours}:${minutes}:${seconds}`;
+    // let nt = new Date((new Date().getTime()) - this.state.time + this.offset);
+    // let [hours,minutes,seconds] = [nt.getHours(),nt.getMinutes(),nt.getSeconds()].map((x)=>(x+"").padStart(2,0))
+    // let timerStr = `${hours}:${minutes}:${seconds}`;
+    let nt = (new Date()).valueOf() - this.state.time;
+    let timerStr = Math.floor(nt/1000)+"s";
     this.setState({
       timerStr: timerStr,
     });
