@@ -8,7 +8,7 @@ class Timer extends React.Component {
       time: 0,
       x: 0,
       y: 0,
-      timerStr: "0",
+      timerStr: "00",
       ballStyle: { top: "0px", left: "0px" },
     };
     this.timerUpdate = this.timerUpdate.bind(this);
@@ -36,7 +36,7 @@ class Timer extends React.Component {
     // let [hours,minutes,seconds] = [nt.getHours(),nt.getMinutes(),nt.getSeconds()].map((x)=>(x+"").padStart(2,0))
     // let timerStr = `${hours}:${minutes}:${seconds}`;
     let nt = (new Date()).valueOf() - this.state.time;
-    let timerStr = Math.floor(nt/1000);
+    let timerStr = (Math.floor(nt/1000)+"").padStart(2,0);
     this.setState({
       timerStr: timerStr,
     });
